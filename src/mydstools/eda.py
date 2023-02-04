@@ -96,6 +96,17 @@ def obj_vars_unique(df: pd.DataFrame, verbose=False):
 
 
 def plot_corr(df: pd.DataFrame, var: str = None):
+    """
+    The function calculates the correlation between the variables in the 
+    DataFrame and creates a heatmap to visualize it. If the string variable 
+    is specified, it will create a heatmap that shows the features correlating 
+    with that variable. Otherwise, it will create a heatmap of all variables 
+    in the DataFrame.
+
+    Args:
+        df (pd.DataFrame): input dataframe
+        var (str, optional): name of the variable to focus on. Defaults to None.
+    """
     corr = df.corr()
     if var:
         heatmap = sns.heatmap(corr[[var]].sort_values(by=var, ascending=False)[1:],
@@ -109,11 +120,32 @@ def plot_corr(df: pd.DataFrame, var: str = None):
 
 
 def perc_missing_values(df: pd.DataFrame):
+    """
+    The function calculates the percentage of missing values in the DataFrame 
+    and returns a list of the columns with non-zero missing values, 
+    sorted in descending order.
+
+    Args:
+        df (pd.DataFrame): input dataframe
+
+    Returns:
+        list: list of the columns with non-zero missing values
+    """
     missing = df.isnull().sum().sort_values(ascending=False)/df.shape[0]
     return missing[missing != 0]
 
 
 def check_column(column: pd.Series):
+    """
+    This code takes in a pandas series as an argument and prints out 
+    information about the column. It prints out the data type, the number 
+    of null values and non-null values, and if the data type is int or float 
+    it will print out summary statistics. If the data type is not int or 
+    float it will print out the number of unique values and list them.
+
+    Args:
+        column (pd.Series): input series
+    """
     n_unique = len(column.unique())
     nulls = column.isnull().sum()
     non_nulls = column.shape[0] - nulls
