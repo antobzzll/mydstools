@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mydstools"
-version = "0.1.1"
+version = "0.1.2"
 description = "Data Science Toolbox"
 authors = ["Antonio Buzzelli"]
 license = "MIT"
