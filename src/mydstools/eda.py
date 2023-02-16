@@ -1,3 +1,6 @@
+# This module is part of mydstools.
+# Please refer to https://github.com/antobzzll/dstoolbox
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -158,3 +161,26 @@ def check_column(column: pd.Series):
     else:
         print(f'Unique values: {n_unique} ({n_unique/non_nulls})')
         print(column.unique())
+
+
+def cond_prob(df_data: pd.DataFrame, outcome: tuple, events: dict = {}) -> float:
+    """
+    Calculates the conditional probability of the outcome given the events in the DataFrame.
+    
+    Parameters:
+    df_data (pd.DataFrame): The DataFrame containing the data.
+    outcome (tuple): The outcome of interest represented as a tuple of column name and value, e.g., ("exam", 1).
+    events (dict): The events of interest represented as a dictionary of column names and values, e.g., {"study": 1}.
+    
+    Returns:
+    float: The conditional probability of the outcome given the events.
+    """
+    
+    # Filter the DataFrame based on the events
+    for feature, value in events.items():
+        df_data = df_data[df_data[feature] == value]
+
+    # Calculate the conditional probability of the outcome given the events
+    prob = df_data[df_data[outcome[0]] == outcome[1]].shape[0] / df_data.shape[0]
+
+    return prob

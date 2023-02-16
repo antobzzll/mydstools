@@ -1,3 +1,6 @@
+# This module is part of mydstools.
+# Please refer to https://github.com/antobzzll/dstoolbox
+
 import pandas as pd
 
 

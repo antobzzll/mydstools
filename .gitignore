@@ -1,4 +1,5 @@
 src/mydstools/mydstools.code-workspace
+poetry_publish_cmd.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
