@@ -4,7 +4,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+import numpy as np
+from statsmodels.stats.multicomp import pairwise_tukeyhsd
 
 def distribution_analysis(series: pd.Series, 
                           label: str = None, 
@@ -184,3 +185,26 @@ def cond_prob(df_data: pd.DataFrame, outcome: tuple, events: dict = {}) -> float
     prob = df_data[df_data[outcome[0]] == outcome[1]].shape[0] / df_data.shape[0]
 
     return prob
+
+def tukeyhsd(df: pd.DataFrame, cat_var: str, target_var: str):
+    """
+    tukeyhsd() is a function that performs Tukey's Honest Significant Difference (HSD) test on a given dataframe. 
+    It takes two arguments: df (a pandas DataFrame) and cat_var and target_var (strings representing the categorical variable and the target variable respectively). 
+    The function groups the dataframe by the categorical variable, then performs the Tukey HSD test on each group of the target variable. 
+    The results of the test are printed. 
+
+    Args:
+        df (pd.DataFrame): [description]
+        cat_var (str): [description]
+        target_var (str): [description]
+    """
+    series = []
+    labels = []
+
+    for n, s in df.groupby(cat_var)[target_var]:
+        series.extend(s)
+        labels += [n] * len(s)
+    series = np.array(series)
+
+    tukey_results = pairwise_tukeyhsd(series, labels)
+    print(tukey_results)
